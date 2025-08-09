@@ -1,53 +1,51 @@
 #!/bin/sh
 # EStalkerWebControl Plugin Installer
-# Version: 1.1
+# Version: 1.3
 # Author: MNASR
-#wget -q "--no-check-certificate" https://raw.githubusercontent.com/popking159/EStalkerWebControl/refs/heads/main/installer.sh -O - | /bin/sh
 
-echo ''
+echo "Starting installation..."
 
-sleep 3s
+sleep 3
 
 if [ -d /usr/lib/enigma2/python/Plugins/Extensions/EStalkerWebControl ]; then
-echo "> removing previous package please wait..."
-sleep 2s 
-rm -rf /usr/lib/enigma2/python/Plugins/Extensions/EStalkerWebControl > /dev/null 2>&1
+    echo "> Removing previous installation..."
+    rm -rf /usr/lib/enigma2/python/Plugins/Extensions/EStalkerWebControl
 fi
 
-status='/var/lib/opkg/status'
-package='enigma2-plugin-extensions-estalkerwebcontrol'
+status_file='/var/lib/opkg/status'
+package_name='enigma2-plugin-extensions-estalkerwebcontrol'
 
-if grep -q $package $status; then
-opkg remove $package > /dev/null 2>&1
+if [ -f "$status_file" ] && grep -q "$package_name" "$status_file"; then
+    echo "> Removing opkg package..."
+    opkg remove "$package_name"
 fi
 
-sleep 2s
+sleep 2
 
-echo "downloading EStalkerWebControl..."
-wget -O  /var/volatile/tmp/EStalkerWebControl.tar.gz https://github.com/popking159/ssupport/raw/main/EStalkerWebControl.tar.gz
-echo "Installing EStalkerWebControl..."
-tar -xzf /var/volatile/tmp/EStalkerWebControl.tar.gz -C /
-rm -rf /var/volatile/tmp/EStalkerWebControl.tar.gz > /dev/null 2>&1
-sleep 2s
+echo "> Downloading EStalkerWebControl..."
+wget -q -O /tmp/EStalkerWebControl.tar.gz "https://github.com/popking159/EStalkerWebControl/raw/refs/heads/main/EStalkerWebControl.tar.gz"
+
+if [ $? -ne 0 ]; then
+    echo "ERROR: Download failed!"
+    exit 1
+fi
+
+echo "> Installing..."
+tar -xzf /tmp/EStalkerWebControl.tar.gz -C /
+if [ $? -ne 0 ]; then
+    echo "ERROR: Extraction failed!"
+    exit 1
+fi
+
+rm -f /tmp/EStalkerWebControl.tar.gz
+sleep 2
 
 sync
-echo "#########################################################"
-echo "#########################################################"
-#echo "Installing dependency files"
-#opkg install python3-codecs python3-compression python3-core python3-difflib python3-json python3-requests python3-xmlrpc unrar python3-beautifulsoup4
-
-
-# ============================================================================================================
-sleep 2
-sync
-echo "==================================================================="
-echo "===                          FINISHED                           ==="
-echo "===                           MNASR                             ==="
-echo "==================================================================="
-sleep 2
-echo "==================================================================="
-echo "             Orange Audio update completed successfully!           "
-echo "==================================================================="
+echo "========================================================="
+echo "===                      FINISHED                     ==="
+echo "===                       MNASR                       ==="
+echo "========================================================="
+echo "       Orange Audio installed successfully!              "
+echo "========================================================="
 
 exit 0
-
