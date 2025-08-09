@@ -4,9 +4,6 @@
 # Author: MNASR
 #wget -q "--no-check-certificate" https://raw.githubusercontent.com/popking159/EStalkerWebControl/refs/heads/main/installer.sh -O - | /bin/sh
 
-######### Only These two lines to edit with new version ######
-#version='1.1'
-##############################################################
 echo ''
 
 sleep 3s
@@ -53,3 +50,4 @@ echo "             Orange Audio update completed successfully!           "
 echo "==================================================================="
 
 exit 0
+
