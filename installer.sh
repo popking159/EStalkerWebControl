@@ -1,6 +1,6 @@
 #!/bin/sh
 # EStalkerWebControl Plugin Installer
-# Version: 1.3
+# Version: 1.1
 # Author: MNASR
 
 echo "Starting installation..."
@@ -16,7 +16,7 @@ status_file='/var/lib/opkg/status'
 package_name='enigma2-plugin-extensions-estalkerwebcontrol'
 
 if [ -f "$status_file" ] && grep -q "$package_name" "$status_file"; then
-    echo "> Removing opkg package..."
+    echo "> Removing old opkg package..."
     opkg remove "$package_name"
 fi
 
@@ -45,7 +45,7 @@ echo "========================================================="
 echo "===                      FINISHED                     ==="
 echo "===                       MNASR                       ==="
 echo "========================================================="
-echo "       Orange Audio installed successfully!              "
+echo "       EStalkerWebControl installed successfully!        "
 echo "========================================================="
 
 exit 0
